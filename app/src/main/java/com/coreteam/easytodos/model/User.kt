@@ -1,0 +1,14 @@
+package com.coreteam.easytodos.model
+
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+@Entity(tableName = "user")
+data class User(
+    @PrimaryKey
+    val userId: Int,
+    val username: String,
+    val email: String,
+    val firstName: String,
+    val lastName: String
+)
