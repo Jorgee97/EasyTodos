@@ -1,16 +1,15 @@
-package com.coreteam.easytodos.view
+package com.coreteam.easytodos.view.login
 
 import android.content.Intent
-import android.opengl.Visibility
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.core.widget.doAfterTextChanged
-import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.coreteam.easytodos.R
+import com.coreteam.easytodos.view.main.MainActivity
 import com.coreteam.easytodos.viewmodel.LoginViewModel
 import kotlinx.android.synthetic.main.activity_login.*
 

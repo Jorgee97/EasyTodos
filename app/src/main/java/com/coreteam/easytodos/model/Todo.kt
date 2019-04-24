@@ -9,5 +9,5 @@ data class Todo(
     val todoId: Int = 0,
     val description: String,
     val completed: Boolean,
-    val userId: Int
+    val userId: String
 )

@@ -1,5 +1,6 @@
 package com.coreteam.easytodos.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -45,6 +46,7 @@ class LoginViewModel: ViewModel() {
                     _registerOrLoginSuccessful.postValue(true)
                 } else {
                     val exception = it.exception
+                    Log.wtf("ERRRRORORORO", exception?.message)
                     if (exception is FirebaseAuthUserCollisionException) {
                         loginUser(email, password)
                     } else {

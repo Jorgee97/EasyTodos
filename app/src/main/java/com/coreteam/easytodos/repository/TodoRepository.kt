@@ -6,11 +6,19 @@ import io.reactivex.Completable
 import io.reactivex.Observable
 
 class TodoRepository(private val todoDao: TodoDao) {
-    fun fetchAll(userId: Int) : Observable<List<Todo>> {
+    fun fetchAll(userId: String) : Observable<List<Todo>> {
         return todoDao.getTodos(userId)
     }
 
     fun insert(todo: Todo)  {
         return todoDao.insertTodo(todo)
+    }
+
+    fun updateCompletion(completed: Boolean, todoId: Int){
+        return todoDao.updateTodoComplete(completed, todoId)
+    }
+
+    fun updateDescription(description: String, todoId: Int) {
+        return todoDao.updateTodoDescription(description, todoId)
     }
 }

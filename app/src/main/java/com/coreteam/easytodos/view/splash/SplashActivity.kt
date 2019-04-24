@@ -1,11 +1,14 @@
-package com.coreteam.easytodos.view
+package com.coreteam.easytodos.view.splash
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.coreteam.easytodos.R
+import com.coreteam.easytodos.view.login.LoginActivity
+import com.coreteam.easytodos.view.main.MainActivity
 import com.coreteam.easytodos.viewmodel.SplashViewModel
 
 class SplashActivity : AppCompatActivity() {
@@ -22,13 +25,17 @@ class SplashActivity : AppCompatActivity() {
         splashViewModel.isUserLoggedIn.observe(this, Observer {
             if (it) {
                 val mainIntent = Intent(this, MainActivity::class.java)
-                startActivity(mainIntent)
-                finish()
+                Handler().postDelayed(Runnable {
+                    startActivity(mainIntent)
+                    finish()
+                }, 1000)
             }
             else {
                 val loginIntent = Intent(this, LoginActivity::class.java)
-                startActivity(loginIntent)
-                finish()
+                Handler().postDelayed(Runnable {
+                    startActivity(loginIntent)
+                    finish()
+                }, 1000)
             }
         })
     }
