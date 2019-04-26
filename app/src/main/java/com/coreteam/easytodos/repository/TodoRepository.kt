@@ -21,4 +21,8 @@ class TodoRepository(private val todoDao: TodoDao) {
     fun updateDescription(description: String, todoId: Int) {
         return todoDao.updateTodoDescription(description, todoId)
     }
+
+    fun deleteTodo(todoId: Int) {
+        return todoDao.deleteTodoById(todoId)
+    }
 }

@@ -76,4 +76,10 @@ class TodosViewModel : ViewModel() {
             }, { e -> Log.wtf("ERROR", e.message) })
     }
 
+    fun deleteTodo(todoId: Int) {
+        Observable.fromCallable { todoRepository.deleteTodo(todoId) }
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.io())
+            .subscribe { fetchTodos() }
+    }
 }

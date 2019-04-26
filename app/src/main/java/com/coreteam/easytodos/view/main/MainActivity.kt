@@ -8,9 +8,11 @@ import android.view.View
 import android.widget.CheckBox
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.coreteam.easytodos.R
+import com.coreteam.easytodos.util.SwipeToDeleteHelper
 import com.coreteam.easytodos.view.add.AddTodoActivity
 import com.coreteam.easytodos.viewmodel.TodosViewModel
 import kotlinx.android.synthetic.main.activity_main.*
@@ -19,6 +21,7 @@ import kotlinx.android.synthetic.main.todo_item.*
 class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     lateinit var mainViewModel: TodosViewModel
+    private lateinit var mAdapter : MainTodosAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,6 +30,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         setupRecyclerView()
         setupViewModel()
         fetchAndObserveTodos()
+        setupSwipeToDelete()
     }
 
     override fun onRestart() {
@@ -46,12 +50,28 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     private fun fetchAndObserveTodos() {
         mainViewModel.fetchTodos()
         mainViewModel.todoList.observe(this, Observer {
-            val adapter = MainTodosAdapter(it) {todo, _ ->
+            mAdapter = MainTodosAdapter(it) {todo, _ ->
                 mainViewModel.updateTodoCompletion(todo.todoId, todo.completed)
                 Log.wtf("OOPS", todo.completed.toString())
             }
-            todos_recycler.adapter = adapter
+            todos_recycler.adapter = mAdapter
         })
+    }
+
+    private fun setupSwipeToDelete() {
+        val swipeToDeleteHelper = object : SwipeToDeleteHelper(this) {
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val swipedPosition = viewHolder.adapterPosition
+                
+                val deletedItem = mAdapter.getItemAtPosition(swipedPosition)
+                mAdapter.removeItem(swipedPosition)
+
+                mainViewModel.deleteTodo(deletedItem.todoId)
+            }
+        }
+
+        val itemTouchHelper = ItemTouchHelper(swipeToDeleteHelper)
+        itemTouchHelper.attachToRecyclerView(todos_recycler)
     }
 
     override fun onClick(v: View?) {

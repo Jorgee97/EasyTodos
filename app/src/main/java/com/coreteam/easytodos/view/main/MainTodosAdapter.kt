@@ -26,6 +26,15 @@ class MainTodosAdapter(private val todos: List<Todo>,
         holder.bind(todo, onTodoClicked)
     }
 
+    fun removeItem(position: Int) {
+        todos.toMutableList().removeAt(position)
+        notifyItemRemoved(position)
+    }
+
+    fun getItemAtPosition(position: Int) : Todo{
+        return todos[position]
+    }
+
     class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
         fun bind(todo: Todo, listener: (Todo, View) -> Unit) =  with(itemView){
             todoItem.text = todo.description
