@@ -5,9 +5,11 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "todo")
 data class Todo(
-    @PrimaryKey(autoGenerate = true)
-    val todoId: Int = 0,
+    @PrimaryKey
+    val todoId: String,
     val description: String,
     val completed: Boolean,
     val userId: String
-)
+) {
+    constructor() : this("", "", false, "")
+}

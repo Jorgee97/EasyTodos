@@ -7,6 +7,7 @@ import com.coreteam.easytodos.model.database.AppDatabase
 import com.coreteam.easytodos.repository.TodoRepository
 import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -23,8 +24,8 @@ class DataModule {
 
     @Singleton
     @Provides
-    fun provideTodoRepository(appDatabase: AppDatabase) : TodoRepository {
-        return TodoRepository(appDatabase.todoDao())
+    fun provideTodoRepository(appDatabase: AppDatabase, firebaseDatabase: FirebaseDatabase) : TodoRepository {
+        return TodoRepository(appDatabase.todoDao(), firebaseDatabase)
     }
 
     @Singleton
@@ -32,5 +33,11 @@ class DataModule {
     fun provideFirebaseAuthInstance(context: Context) : FirebaseAuth {
         FirebaseApp.initializeApp(context)
         return FirebaseAuth.getInstance()
+    }
+
+    @Singleton
+    @Provides
+    fun provideFirebaseDatabaseInstance() : FirebaseDatabase {
+        return FirebaseDatabase.getInstance()
     }
 }

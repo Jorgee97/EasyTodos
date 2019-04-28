@@ -62,7 +62,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         val swipeToDeleteHelper = object : SwipeToDeleteHelper(this) {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val swipedPosition = viewHolder.adapterPosition
-                
+
                 val deletedItem = mAdapter.getItemAtPosition(swipedPosition)
                 mAdapter.removeItem(swipedPosition)
 

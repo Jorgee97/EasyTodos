@@ -1,5 +1,6 @@
 package com.coreteam.easytodos.view.main
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.OrientationEventListener
 import android.view.View
@@ -7,6 +8,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.coreteam.easytodos.R
 import com.coreteam.easytodos.model.Todo
+import com.coreteam.easytodos.view.UpdateTodoActivity
 import kotlinx.android.synthetic.main.todo_item.view.*
 
 class MainTodosAdapter(private val todos: List<Todo>,
@@ -40,6 +42,13 @@ class MainTodosAdapter(private val todos: List<Todo>,
             todoItem.text = todo.description
             todoItem.isChecked = todo.completed
             todoItem.setOnClickListener { listener(todo, itemView) }
+            todoItem.setOnLongClickListener {
+                val updateDescriptionIntent = Intent(itemView.context, UpdateTodoActivity::class.java)
+                updateDescriptionIntent.putExtra("TODO_ID", todo.todoId)
+                updateDescriptionIntent.putExtra("ACTUAL_DESCRIPTION", todo.description)
+                itemView.context.startActivity(updateDescriptionIntent)
+                return@setOnLongClickListener true
+            }
         }
     }
 }

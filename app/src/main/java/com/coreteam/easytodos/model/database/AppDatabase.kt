@@ -7,7 +7,7 @@ import com.coreteam.easytodos.model.TodoDao
 import com.coreteam.easytodos.model.User
 import com.coreteam.easytodos.model.UserDao
 
-@Database(entities = [(Todo::class), (User::class)], version = 1, exportSchema = false)
+@Database(entities = [(Todo::class), (User::class)], version = 2, exportSchema = false)
 abstract class  AppDatabase : RoomDatabase(){
     abstract fun userDao(): UserDao
     abstract fun todoDao(): TodoDao

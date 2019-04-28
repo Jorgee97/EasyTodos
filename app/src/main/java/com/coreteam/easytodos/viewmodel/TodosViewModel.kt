@@ -8,7 +8,9 @@ import androidx.lifecycle.ViewModel
 import com.coreteam.easytodos.App
 import com.coreteam.easytodos.model.Todo
 import com.coreteam.easytodos.repository.TodoRepository
+import com.coreteam.easytodos.util.StringGenerator
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -23,8 +25,12 @@ class TodosViewModel : ViewModel() {
     @Inject
     lateinit var auth: FirebaseAuth
 
+    var currentUser: FirebaseUser?
+
     init {
         App.instance.mainComponent.inject(this)
+
+        currentUser = auth.currentUser
     }
 
     private val _isInserted = MutableLiveData<Boolean>()
@@ -35,9 +41,8 @@ class TodosViewModel : ViewModel() {
     // TODO: Fix unattended check results from rxjava subscriptions
     @SuppressLint("CheckResult")
     fun insertTodo(description: String) {
-        val currentUser = auth.currentUser
         if (currentUser != null) {
-            val newTodo = Todo(0, description, false, currentUser.uid)
+            val newTodo = Todo(StringGenerator().AlphanumericGenerator(), description, false, currentUser!!.uid)
             Observable.fromCallable { todoRepository.insert(newTodo) }
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
@@ -53,8 +58,8 @@ class TodosViewModel : ViewModel() {
     }
 
     @SuppressLint("CheckResult")
-    fun updateTodoCompletion(todoId: Int, completed: Boolean) {
-        Observable.fromCallable { todoRepository.updateCompletion(!completed, todoId) }
+    fun updateTodoCompletion(todoId: String, completed: Boolean) {
+        Observable.fromCallable { todoRepository.updateCompletion(!completed, todoId, currentUser!!.uid) }
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
             .subscribe({
@@ -65,9 +70,15 @@ class TodosViewModel : ViewModel() {
             })
     }
 
+    fun updateTodoDescription(todoId: String, description: String) {
+        Observable.fromCallable { todoRepository.updateDescription(description, todoId, currentUser!!.uid) }
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.io())
+            .subscribe()
+    }
+
     @SuppressLint("CheckResult")
     fun fetchTodos() {
-        val currentUser = auth.currentUser
         todoRepository.fetchAll(currentUser!!.uid)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
@@ -76,8 +87,8 @@ class TodosViewModel : ViewModel() {
             }, { e -> Log.wtf("ERROR", e.message) })
     }
 
-    fun deleteTodo(todoId: Int) {
-        Observable.fromCallable { todoRepository.deleteTodo(todoId) }
+    fun deleteTodo(todoId: String) {
+        Observable.fromCallable { todoRepository.deleteTodo(todoId, currentUser!!.uid) }
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
             .subscribe { fetchTodos() }
