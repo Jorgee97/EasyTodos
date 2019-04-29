@@ -21,6 +21,8 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
+        supportActionBar!!.hide()
+
         loginViewModel = ViewModelProviders.of(this).get(LoginViewModel::class.java)
         
         btnLogin.isEnabled = false

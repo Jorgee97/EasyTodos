@@ -29,7 +29,7 @@ class TodoRepository(private val todoDao: TodoDao, private val firebaseDatabase:
                 Log.wtf("ErrorOnFirebaseFetch", p0.message)
             }
         }
-        todosReference.addListenerForSingleValueEvent(listener)
+        todosReference.addValueEventListener(listener)
         return todoDao.getTodos(userId)
     }
 
@@ -51,7 +51,6 @@ class TodoRepository(private val todoDao: TodoDao, private val firebaseDatabase:
         return todoDao.updateTodoComplete(completed, todoId)
     }
 
-    // Todo: Update description is missing
     fun updateDescription(description: String, todoId: String, userId: String) {
         firebaseDatabase.getReference("users").child(userId).child("todos").child(todoId).child("description").setValue(description)
         return todoDao.updateTodoDescription(description, todoId)

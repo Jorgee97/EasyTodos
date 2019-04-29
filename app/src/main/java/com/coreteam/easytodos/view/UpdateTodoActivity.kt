@@ -16,6 +16,10 @@ class UpdateTodoActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_update_todo)
 
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        supportActionBar!!.setDisplayShowHomeEnabled(true)
+
+
         val todoId = intent.extras.get("TODO_ID").toString()
         val actualDescription = intent.extras.get("ACTUAL_DESCRIPTION").toString()
 

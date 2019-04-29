@@ -37,6 +37,9 @@ class TodosViewModel : ViewModel() {
     val isInserted: LiveData<Boolean>
         get() = _isInserted
 
+    fun logout() {
+        auth.signOut()
+    }
 
     // TODO: Fix unattended check results from rxjava subscriptions
     @SuppressLint("CheckResult")

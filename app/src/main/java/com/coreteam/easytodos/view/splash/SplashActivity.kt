@@ -13,11 +13,13 @@ import com.coreteam.easytodos.viewmodel.SplashViewModel
 
 class SplashActivity : AppCompatActivity() {
 
-    lateinit var splashViewModel: SplashViewModel
+    private lateinit var splashViewModel: SplashViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
+
+        supportActionBar!!.hide()
 
         splashViewModel = ViewModelProviders.of(this).get(SplashViewModel::class.java)
 
