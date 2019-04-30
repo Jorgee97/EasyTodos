@@ -2,13 +2,12 @@ package com.coreteam.easytodos.view.main
 
 import android.content.Intent
 import android.view.LayoutInflater
-import android.view.OrientationEventListener
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.coreteam.easytodos.R
 import com.coreteam.easytodos.model.Todo
-import com.coreteam.easytodos.view.UpdateTodoActivity
+import com.coreteam.easytodos.view.update.UpdateTodoActivity
 import kotlinx.android.synthetic.main.todo_item.view.*
 
 class MainTodosAdapter(private val todos: List<Todo>,

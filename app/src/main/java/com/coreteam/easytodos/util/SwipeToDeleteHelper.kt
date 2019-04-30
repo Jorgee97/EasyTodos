@@ -20,7 +20,7 @@ open class SwipeToDeleteHelper(private val context: Context)
     var initiated : Boolean = false
 
     init {
-        xMark.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC)
+        xMark.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_ATOP)
         xMarkMargin = context.resources.getDimension(R.dimen.fab_margin).toInt()
         initiated = true
     }

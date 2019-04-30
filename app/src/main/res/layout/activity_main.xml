@@ -7,13 +7,16 @@
         android:layout_height="match_parent"
         tools:context=".view.main.MainActivity">
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:layout_width="wrap_content"
+    <Button
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:onClick="onClick"
-            android:clickable="true" app:srcCompat="@android:drawable/ic_input_add"
+            android:background="@drawable/rounded_top_border_rectangle"
+            android:backgroundTint="@color/colorPrimary"
+            android:textColor="@android:color/white"
+            android:text="Add Todo"
             android:id="@+id/btnAddTodo" app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginEnd="16dp" android:layout_marginBottom="16dp"
+            android:layout_marginEnd="0dp" android:layout_marginBottom="0dp"
             app:layout_constraintBottom_toBottomOf="parent"/>
     <ProgressBar
             style="?android:attr/progressBarStyle"
@@ -32,7 +35,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/btnAddTodo"
             android:id="@+id/todos_recycler">
     </androidx.recyclerview.widget.RecyclerView>
 

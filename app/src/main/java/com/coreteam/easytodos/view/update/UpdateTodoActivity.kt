@@ -1,6 +1,5 @@
-package com.coreteam.easytodos.view
+package com.coreteam.easytodos.view.update
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.lifecycle.ViewModelProviders
@@ -15,6 +14,7 @@ class UpdateTodoActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_update_todo)
+        //supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         val todoId = intent.extras.get("TODO_ID").toString()
         val actualDescription = intent.extras.get("ACTUAL_DESCRIPTION").toString()
